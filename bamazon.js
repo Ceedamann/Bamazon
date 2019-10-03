@@ -11,6 +11,10 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err){
     if(err) throw err;
+   console.log(" ");
+   console.log("<<<<<<<<<<<<<<Welcome to Bamazon!!>>>>>>>>>>>>>>>");
+   console.log(" ");
+   
    
 });
 
@@ -32,7 +36,12 @@ function loadProducts(){
 
 //Prompt the customer for a product ID//
 function whichItem(){
-
+  inquirer
+  .prompt({
+    name:"userPick",
+    type:"input",
+    message: "What is the ID of the item you would like to purchase?"
+  })
 };
 //Prompt customer for quantity
 function howMany(){
