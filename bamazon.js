@@ -41,10 +41,29 @@ function whichItem(){
     name:"userPick",
     type:"input",
     message: "What is the ID of the item you would like to purchase?"
+  }).then(function(ans){
+    connection.query("SELECT product_name,price FROM products WHERE id=?", [ans.userPick],function(err,res){
+      if(err) throw err;
+      console.table(res);
+      howMany();
+    })
   })
 };
 //Prompt customer for quantity
 function howMany(){
+inquirer
+.prompt({
+  name:"amount",
+  type:"input",
+  message: "How many would you like to purchase?"
+}).then(function(ans){
+connection.query("SELECT * FROM products WHERE id=?", [ans.amount], function(err, res){
+  if(err) throw err;
+  console.log("Purchase complete!!");
+    makePurchase();
+})
+
+})
 
 }
 //purchase function to buy item//
