@@ -57,9 +57,10 @@ inquirer
   type:"input",
   message: "How many would you like to purchase?"
 }).then(function(ans){
-connection.query("SELECT * FROM products WHERE id=?", [ans.amount], function(err, res){
+connection.query("SELECT * FROM products WHERE ?", {id: ans.amount}, function(err, res){
   if(err) throw err;
-  console.log("Purchase complete!!");
+  var stock = res[0].stock_quantity
+  console.log(stock);
     makePurchase();
 })
 
