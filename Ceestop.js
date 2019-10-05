@@ -16,7 +16,7 @@ connection.connect(function (err) {
     menuchoice();
 
 });
-// created function to prompt user on store options///
+// create function to prompt user on store options///
 function menuchoice() {
     inquirer
         .prompt({
@@ -38,4 +38,11 @@ function menuchoice() {
                     break;
             }
         });
+}
+//create function to load store products and ask user what they would like to purchase//
+function loadProducts(){
+    connection.query("SELECT * FROM products", function(err, res){
+        if (err) throw err;
+        console.table(res)
+    })
 }
