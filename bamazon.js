@@ -58,10 +58,18 @@ inquirer
   message: "How many would you like to purchase?"
 }).then(function(ans){
 connection.query("SELECT * FROM products WHERE ?", {id: ans.amount}, function(err, res){
-  if(err) throw err;
-  var stock = res[0].stock_quantity
-  console.log(stock);
+  var stock = res[0].stock_quantity;
+  var bought = ans.amount;
+  if(stock >= bought){
+    console.log("Your in luck we have "+ stock + " in stock!!" );
     makePurchase();
+     }else{
+       console.log("Sorry waiting for new shipment...");
+       connection.end();
+       
+     }
+  
+   
 })
 
 })
