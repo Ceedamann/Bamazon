@@ -43,6 +43,33 @@ function menuchoice() {
 function loadProducts(){
     connection.query("SELECT * FROM products", function(err, res){
         if (err) throw err;
-        console.table(res)
+        console.table(res);
+        inquirer
+        //prompt user to select id from table//
+        .prompt([{
+            name: "choice",
+            type: "input",
+            message: "What is the ID of the item you would like to purchase?",
+            validate:function(value){
+                if(isNaN(value)=== false){
+                    return true;
+                }
+                return false;
+            }
+        },
+        //prompt how many would like to purchase///
+        {
+            name: "amount",
+            type: "input",
+            message: "How many would you like to purchase?",
+            validate:function(value){
+                if (isNaN(value)=== false){
+                    return true;
+                }
+                return false;
+            }
+        }
+    ])
+    
     })
 }
