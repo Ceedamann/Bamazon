@@ -70,6 +70,38 @@ function loadProducts(){
             }
         }
     ])
-    
-    })
+    // checking to see if item is in stock///
+    .then(function(ans){
+        connection.query("SELECT * FROM products WHERE ?", {id:ans.choice},function(err,res){
+            var stock = res[0].stock_quantity;
+            var bought = ans.amount;
+            var amountDue = res[0].price * bought;
+            if (stock >= bought){
+                //updating the database//
+                var stockLeft = stock - bought;
+                connection.query(
+                    "UPDATE products SET ? WHERE ?",[{
+                        stock_quantity: stockLeft
+                    },
+                    {
+                        id: ans.choice
+                    }
+                ],
+                function(err){
+                    if (err) throw err;
+                    console.log("Purchse completed...\n ");
+                    console.log("You Owe... $ " + amountDue);
+                    
+                    menuchoice();
+                })
+            }
+            else{
+                console.log("Sorry waiting for new shipment!!");
+                menuchoice();
+                
+            }
+        });
+    });
+
+    });
 }
